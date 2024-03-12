@@ -1,0 +1,10 @@
+.Card{
+    width:30%;
+    height:30%;
+    background-color: yellow;
+    margin:20px;
+}
+
+.form-div{
+    display:flex;
+}
