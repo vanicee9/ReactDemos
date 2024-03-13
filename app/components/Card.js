@@ -2,7 +2,7 @@
 
 
 export default function Card({
-  deleteCard, id , firstName, lastName, email, imageUrl, 
+ deleteCard,setUpdateId, id , firstName, lastName, email, imageUrl, 
 }) {
  
   return (
@@ -15,7 +15,7 @@ export default function Card({
     <div id="lastName">lastName: {lastName}</div> 
     <div id="email">email: {email}</div> 
     <div id="image"><img src={imageUrl} alt="" /></div>
-   <button id="update" onClick={()=>{}}>Update</button>
+   <button id="update" onClick={()=>{setUpdateId(id)}}>Update</button>
    <button id="Delete" onClick={()=>{deleteCard(id)}}>Delete</button>
    
   </div> 

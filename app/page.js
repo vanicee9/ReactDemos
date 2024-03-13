@@ -10,24 +10,21 @@ const URL = "https://hub.dummyapis.com/employee?noofRecords=10&idStarts=1001";
 export default function Home() {
   
 
-  const [data, setData]=useState([]);
-  
+ const [data, setData]=useState([]);
+ const [updateId, setUpdateId]= useState(undefined);
+ const [card,setCard] = useState({});
 
-  useEffect(()=>{
-    async function fetchData(){
-      let response = await fetch(URL)
-      response = await response.json()
-      setData(response)
-      console.log(response)
-    }
-    
-    fetchData();
-  },[])
-  
-  if(data == ""){
-    return(
-      <p>Loading...</p>
-    )
+
+  function findCardWithUpdateId(updateId) {
+
+    if(updateId === undefined) return updateId;
+
+
+    data.forEach((item) => {
+      if(item.id === updateId) {
+        setCard({...item})
+      }
+    })
   }
 
   function deleteCard(id){
@@ -39,13 +36,58 @@ export default function Home() {
          
     })
     setData(newData)
-}
- 
- 
+  }
+
+
+  function updateChanges(updatedCard) {
+    
+    const newData = data.filter((item) => {
+      return card.id !== item.id
+    })
+
+    setData((prev) => {
+          return [
+            ...newData,
+            updatedCard
+          ]
+    })
+
+  }
+
+useEffect(() =>{
+  console.log(updateId)
+  findCardWithUpdateId(updateId); 
+},[updateId])
+
+useEffect(()=>{
+  async function fetchData(){
+    let response = await fetch(URL)
+    response = await response.json()
+    setData(response)
+   console.log(response)
+  }
+  
+  fetchData();
+},[])
+
+
+
+
+
+  if(data == ""){
+    return(
+      <p>Loading...</p>
+    )
+  }
+
+
   return (
   <div className="container">
   
-    <Form/>
+    <Form 
+    card = {card}
+    updateChanges = {updateChanges}
+    />
   
   
     {
@@ -53,7 +95,11 @@ export default function Home() {
           return(
             <Card 
                 key={item.id}
+
                deleteCard={deleteCard}
+              //  updateCard = {updateCard}
+              
+                setUpdateId={setUpdateId}
                 id={item.id}
                 firstName = {item.firstName}
                 lastName = {item.lastName} 
