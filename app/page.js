@@ -8,13 +8,13 @@ import "./components/card.css"
 const URL = "https://hub.dummyapis.com/employee?noofRecords=10&idStarts=1001";
 
 export default function Home() {
-  
+ 
 
  const [data, setData]=useState([]);
  const [updateId, setUpdateId]= useState(undefined);
  const [card,setCard] = useState({});
 
-
+debugger;
   function findCardWithUpdateId(updateId) {
 
     if(updateId === undefined) return updateId;
@@ -58,6 +58,8 @@ useEffect(() =>{
   console.log(updateId)
   findCardWithUpdateId(updateId); 
 },[updateId])
+
+
 
 useEffect(()=>{
   async function fetchData(){
